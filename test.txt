@@ -1,11 +1,55 @@
-import pandas as pdimport plotly.express as px
-def zadatak_1(putanja):    df = pd.read_csv(putanja)    print(df.columns)    return df
-def zadatak_2(df):    print(df.isnull().sum())    print(df.dtypes)
-def zadatak_3(df):    rezultat = df[df['cast'].fillna('').str.contains('James McAvoy')]    print(rezultat['title'])
-def zadatak_4(df):    return df.sort_values(by='title')
-def zadatak_5(df):    df_genres = df.copy()    df_genres['genres'] = df_genres['genres'].fillna('').str.split(', ')    df_exploded = df_genres.explode('genres')    counts = df_exploded['genres'].value_counts().head(10).reset_index()    counts.columns = ['zanr', 'broj_filmova']    fig = px.bar(counts, x='zanr', y='broj_filmova')    fig.show()    print(counts)
-def zadatak_6(df):    df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')    najstariji = df.loc[df['release_date'].idxmin()]    najnoviji = df.loc[df['release_date'].idxmax()]    print(najstariji[['title', 'release_date']])    print(najnoviji[['title', 'release_date']])
-def zadatak_7(df):    df['year'] = pd.to_datetime(df['release_date']).dt.year    fig = px.histogram(df, x='year')    fig.show()
-def zadatak_8(df):    rezultat = df[df['director'] != df['writer']]    print(rezultat[['title', 'director', 'writer']])
-def zadatak_9(df):    df['year'] = pd.to_datetime(df['release_date']).dt.year    df_genres = df.copy()    df_genres['genres'] = df_genres['genres'].fillna('').str.split(', ')    df_exploded = df_genres.explode('genres')    df_exploded = df_exploded[df_exploded['genres'] != '']    fig = px.scatter(df_exploded, x='year', y='genres')    fig.show()
-if __name__ == "__main__":    putanja_do_fajla = 'Filmovi.csv'    data = zadatak_1(putanja_do_fajla)    zadatak_2(data)    zadatak_3(data)    sortiran_df = zadatak_4(data)    zadatak_5(data)    zadatak_6(data)    zadatak_7(data)    zadatak_8(data)    zadatak_9(data)
+import pandas as pd
+import plotly.express as px
+def zadatak_1(putanja):
+    df = pd.read_csv(putanja)
+    print(df.columns)
+    return df
+def zadatak_2(df):
+    print(df.isnull().sum())
+    print(df.dtypes)
+def zadatak_3(df):
+    rezultat = df[df['cast'].fillna('').str.contains('James McAvoy')]
+    print(rezultat['title'])
+def zadatak_4(df):
+    return df.sort_values(by='title')
+def zadatak_5(df):
+    df_genres = df.copy()
+    df_genres['genres'] = df_genres['genres'].fillna('').str.split(', ')
+    df_exploded = df_genres.explode('genres')
+    counts = df_exploded['genres'].value_counts().head(10).reset_index()
+    counts.columns = ['zanr', 'broj_filmova']
+    fig = px.bar(counts, x='zanr', y='broj_filmova')
+    fig.show()
+    print(counts)
+def zadatak_6(df):
+    df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
+    najstariji = df.loc[df['release_date'].idxmin()]
+    najnoviji = df.loc[df['release_date'].idxmax()]
+    print(najstariji[['title', 'release_date']])
+    print(najnoviji[['title', 'release_date']])
+def zadatak_7(df):
+    df['year'] = pd.to_datetime(df['release_date']).dt.year
+    fig = px.histogram(df, x='year')
+    fig.show()
+def zadatak_8(df):
+    rezultat = df[df['director'] != df['writer']]
+    print(rezultat[['title', 'director', 'writer']])
+def zadatak_9(df):
+    df['year'] = pd.to_datetime(df['release_date']).dt.year
+    df_genres = df.copy()
+    df_genres['genres'] = df_genres['genres'].fillna('').str.split(', ')
+    df_exploded = df_genres.explode('genres')
+    df_exploded = df_exploded[df_exploded['genres'] != '']
+    fig = px.scatter(df_exploded, x='year', y='genres')
+    fig.show()
+if __name__ == "__main__":
+    putanja_do_fajla = 'Filmovi.csv'
+    data = zadatak_1(putanja_do_fajla)
+    zadatak_2(data)
+    zadatak_3(data)
+    sortiran_df = zadatak_4(data)
+    zadatak_5(data)
+    zadatak_6(data)
+    zadatak_7(data)
+    zadatak_8(data)
+    zadatak_9(data)
